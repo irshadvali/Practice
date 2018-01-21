@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.irshad.practice.activity.AddNewList"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/edtText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="10dp"
+        android:background="@drawable/rounded_border_edittext"/>
+
+
+    <EditText
+        android:id="@+id/detailsText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter details"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:inputType="text|textMultiLine"
+        android:minHeight="150dp"
+        android:gravity="top"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_border_edittext"
+        />
+
+    <CheckBox
+        android:id="@+id/favouritecb"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:button="@drawable/checkbox_selector"
+        android:checked="false"
+        android:text="Favourite"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="10dp"
+        android:textSize="15dp"
+        />
+
+    <CheckBox
+        android:id="@+id/likecb"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:button="@drawable/like_chk_box"
+        android:checked="false"
+        android:text="Like"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="15dp"
+        android:textSize="15dp"></CheckBox>
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Submit"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>

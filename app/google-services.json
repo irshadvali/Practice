@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "207382391299",
+    "firebase_url": "https://fbpractice-38d8c.firebaseio.com",
+    "project_id": "fbpractice-38d8c",
+    "storage_bucket": "fbpractice-38d8c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:207382391299:android:bfaf7649a3e32634",
+        "android_client_info": {
+          "package_name": "com.irshad.practice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "207382391299-8iopn78sb0549dmjqqmr74dghn79g0cd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq_mxoyAqHaClo8SgwvEy5EvXTiSPSE3s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
