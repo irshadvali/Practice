@@ -4,27 +4,108 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/mainlay"
     tools:context="com.irshad.practice.activity.DetailsPage"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="#e6e6e6"></RelativeLayout>
-
-    <TextView
-        android:id="@+id/tilteTV"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="AAAAAAA"
-        android:textColor="#333"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"/>
+       >
+        <RelativeLayout
+            android:id="@+id/headerLay"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="#e6e6e6"
+            android:paddingLeft="10dp"
+            android:paddingRight="15dp">
+            <ImageView
+                android:id="@+id/backbutton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/leftarrow"
+                android:padding="3dp"
+                android:layout_centerVertical="true"
+                />
+            <TextView
+                android:id="@+id/undoButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UNDO"
+                android:gravity="end"
+                android:textSize="20dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:textColor="#333"
+                android:layout_toLeftOf="@+id/saveButton"
+                android:layout_marginEnd="70dp"
+                android:visibility="gone"
+                />
 
-    <TextView
+            <TextView
+                android:id="@+id/saveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SAVE"
+                android:textSize="20dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:textColor="#333"
+                android:layout_toLeftOf="@+id/editButton"
+                android:visibility="gone"
+                />
+
+            <TextView
+                android:id="@+id/editButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EDIT"
+                android:gravity="end"
+                android:textSize="20dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:textColor="#333"
+                android:visibility="visible"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_below="@+id/headerLay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#e6e6e6"
+            android:paddingBottom="20dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+            <EditText
+                android:id="@+id/tilteTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="AAAAAAA"
+                android:textColor="#333"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+
+                android:background="#00000000" />
+
+            <TextView
+                android:layout_below="@+id/tilteTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Last updated : Today at 6:30 PM"
+                android:layout_marginTop="10dp"
+                android:textSize="15dp"/>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+
+    <EditText
         android:id="@+id/detailsTV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,6 +114,7 @@
         android:textSize="20dp"
         android:layout_marginTop="10dp"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp"/>
+        android:paddingRight="15dp"
+        android:background="#00000000" />
 
 </LinearLayout>

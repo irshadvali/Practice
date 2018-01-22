@@ -1,34 +1,182 @@
 package com.irshad.practice.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.irshad.practice.MainActivity;
 import com.irshad.practice.R;
+import com.irshad.practice.model.DataListModel;
 
 public class DetailsPage extends AppCompatActivity {
 
 
     String title,details,id;
-    TextView tilteTV,detailsTV;
-
+    EditText tilteTV,detailsTV;
+    ImageView backbutton;
+    TextView undoButton,saveButton,editButton;
+    LinearLayout mainlay;
+    DatabaseReference databaseReference;
+    DataListModel dataListModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_page);
 
-        tilteTV=(TextView) findViewById(R.id.tilteTV);
-        detailsTV=(TextView) findViewById(R.id.detailsTV);
-
+        tilteTV=(EditText) findViewById(R.id.tilteTV);
+        detailsTV=(EditText) findViewById(R.id.detailsTV);
+        backbutton=(ImageView) findViewById(R.id.backbutton);
+        undoButton=(TextView) findViewById(R.id.undoButton);
+        saveButton=(TextView) findViewById(R.id.saveButton);
+        editButton=(TextView) findViewById(R.id.editButton);
+        mainlay=(LinearLayout) findViewById(R.id.mainlay);
+        editabFlase();
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             title = bundle.getString("title");
             details = bundle.getString("details");
             id = bundle.getString("id");
+
         }
+        tilteTV.setText(title);
+        detailsTV.setText(details);
+        backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editFunction();
+            }
+        });
+        undoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                undoFunction();
+            }
+        });
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveFunction(id);
+            }
+        });
+    }
+
+    public void editFunction(){
+        undoButton.setVisibility(View.VISIBLE);
+        saveButton.setVisibility(View.VISIBLE);
+        editButton.setVisibility(View.GONE);
+        tilteTV.setClickable(true);
+        tilteTV.setFocusable(true);
+        tilteTV.setFocusableInTouchMode(true);
+        tilteTV.setCursorVisible(true);
+
+        detailsTV.setFocusable(true);
+        detailsTV.setClickable(true);
+        detailsTV.setFocusableInTouchMode(true);
+        detailsTV.setCursorVisible(true);
+
+
+    }
+
+    public void saveFunction(String id){
+
+        updateValue(id);
+
+        editabFlase();
+
+    }
+    public void editabFlase(){
+        undoButton.setVisibility(View.GONE);
+        saveButton.setVisibility(View.GONE);
+        editButton.setVisibility(View.VISIBLE);
+
+        tilteTV.setClickable(false);
+        tilteTV.setFocusable(false);
+        tilteTV.setFocusableInTouchMode(false);
+        tilteTV.setCursorVisible(false);
+
+
+        detailsTV.setFocusable(false);
+        detailsTV.setClickable(false);
+        detailsTV.setFocusableInTouchMode(false);
+        detailsTV.setCursorVisible(false);
+
+        HideKeyBoard();
+    }
+
+    public void undoFunction(){
+        undoButton.setVisibility(View.GONE);
+        saveButton.setVisibility(View.GONE);
+        editButton.setVisibility(View.VISIBLE);
+
+
+        tilteTV.setClickable(false);
+        tilteTV.setFocusable(false);
+        tilteTV.setFocusableInTouchMode(false);
+        tilteTV.setCursorVisible(false);
+        detailsTV.setFocusable(false);
+        detailsTV.setClickable(false);
+        detailsTV.setFocusableInTouchMode(false);
+        detailsTV.setCursorVisible(false);
 
         tilteTV.setText(title);
         detailsTV.setText(details);
-        System.out.println(id);
+        HideKeyBoard();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+    public void HideKeyBoard(){
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mainlay.getWindowToken(), 0);
+    }
+
+    public void updateValue(String id){
+        databaseReference=FirebaseDatabase.getInstance().getReference("mainList");
+        String newTitle=tilteTV.getText().toString();
+        String newDetails=detailsTV.getText().toString();
+        databaseReference.child(id).child("title").setValue(newTitle);
+        databaseReference.child(id).child("details").setValue(newDetails);
+
+
+        Query idQuery = databaseReference.orderByChild("id").equalTo(id);
+        idQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
+                    dataListModel = singleSnapshot.getValue(DataListModel.class);
+                    title=dataListModel.getTitle();
+                    details=dataListModel.getDetails();
+                    tilteTV.setText(title);
+                    detailsTV.setText(details);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 }
