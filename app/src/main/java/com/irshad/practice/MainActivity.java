@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
                 }
 
                 System.out.println("irshad vali======"+dataListModel.size());
-                dataListAdapter = new DataListAdapter(activity,dataListModel,databaseReference);
+                dataListAdapter = new DataListAdapter(activity,dataListModel,databaseReference,isFavFilter,isLikeFilter,isPoemFilter,isStoryFilter);
                 listView.setAdapter(dataListAdapter);
 
             }
