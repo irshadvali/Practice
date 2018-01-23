@@ -61,6 +61,53 @@
         android:paddingLeft="15dp"
         android:textSize="15dp"></CheckBox>
 
+    <LinearLayout
+        android:id="@+id/schoolType"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_above="@+id/header"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/rg_story_poem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rd_poem"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="Poem"
+                android:textSize="20dp"
+                android:theme="@style/MyRadioButton"
+
+                />
+
+            <RadioButton
+                android:id="@+id/rd_story"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:text="Story"
+                android:textSize="20dp"
+                android:theme="@style/MyRadioButton" />
+
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+
     <Button
         android:id="@+id/btnSave"
         android:layout_width="match_parent"

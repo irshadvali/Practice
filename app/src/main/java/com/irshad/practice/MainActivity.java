@@ -46,6 +46,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
     List<DataListModel> dataListModel= new ArrayList<DataListModel>();
     public static String mainId;
     RecyclerView.LayoutManager mLayoutManager;
+    int isFavFilter=0;
+    int isLikeFilter=0;
+    int isPoemFilter=0;
+    int isStoryFilter=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
@@ -23,7 +25,9 @@ Activity activity;
     Button btnSave;
     EditText edtText,detailsText;
     CheckBox  favouritecb,likecb;
-    int like,favourite;
+    int like,favourite,poem,story;
+    RadioGroup rg_story_poem;
+    RadioButton rd_poem, rd_story;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,17 @@ Activity activity;
         detailsText = (EditText) findViewById(R.id.detailsText);
        favouritecb=(CheckBox) findViewById(R.id.favouritecb) ;
        likecb=(CheckBox) findViewById(R.id.likecb) ;
+        rg_story_poem = (RadioGroup) findViewById(R.id.rg_story_poem);
+        rd_poem = (RadioButton) findViewById(R.id.rd_poem);
+        rd_story = (RadioButton) findViewById(R.id.rd_story);
+
+
+        rg_story_poem.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+            }
+        });
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,14 +73,33 @@ Activity activity;
                 else {
                     like=0;
                 }
+                if(rd_poem.isChecked()){
+                    poem=1;
+                    story=0;
 
+                }
+                else {
+                    poem=0;
+                    story=1;
+
+                }
+                if(rd_story.isChecked()){
+                    poem=0;
+                    story=1;
+
+                }
+                else {
+                    poem=1;
+                    story=0;
+
+                }
 
                 if (TextUtils.isEmpty(MainActivity.mainId)) {
                     // Created new list
                     if (title.length() > 0) {
                         if (title.length() > 0) {
                             String id = databaseReference.push().getKey();
-                            DataListModel dataListModel = new DataListModel(id, title, details, dateString, timeString, like, favourite);
+                            DataListModel dataListModel = new DataListModel(id, title, details, dateString, timeString, like, favourite,poem,story);
                             databaseReference.child(id).setValue(dataListModel);
                             Toast.makeText(getApplicationContext(), "Data insert", Toast.LENGTH_SHORT).show();
                             activity.finish();
