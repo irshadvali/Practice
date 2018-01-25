@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Practice</string>
+    <string-array name="navigation_drawer_items_array">
+        <item>Hearted</item>
+        <item>Favourite</item>
+        <item>Poems</item>
+        <item>Story</item>
+    </string-array>
 </resources>
