@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,17 +22,22 @@ import com.google.firebase.database.ValueEventListener;
 import com.irshad.practice.MainActivity;
 import com.irshad.practice.R;
 import com.irshad.practice.model.DataListModel;
+import com.irshad.practice.utils.TimeValidation;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class DetailsPage extends AppCompatActivity {
 
 
-    String title,details,id;
+    String title,details,id,datetimeStr,datetime;
     EditText tilteTV,detailsTV;
     ImageView backbutton;
-    TextView undoButton,saveButton,editButton;
+    TextView undoButton,saveButton,editButton,datetimeTv;
     LinearLayout mainlay;
     DatabaseReference databaseReference;
     DataListModel dataListModel;
+    int createdflag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +49,7 @@ public class DetailsPage extends AppCompatActivity {
         undoButton=(TextView) findViewById(R.id.undoButton);
         saveButton=(TextView) findViewById(R.id.saveButton);
         editButton=(TextView) findViewById(R.id.editButton);
+        datetimeTv=(TextView) findViewById(R.id.datetimeTv);
         mainlay=(LinearLayout) findViewById(R.id.mainlay);
         editabFlase();
         Bundle bundle = getIntent().getExtras();
@@ -50,10 +57,20 @@ public class DetailsPage extends AppCompatActivity {
             title = bundle.getString("title");
             details = bundle.getString("details");
             id = bundle.getString("id");
-
+            createdflag= bundle.getInt("createdflag");
+            datetimeStr=bundle.getString("datetime");
         }
+
+
         tilteTV.setText(title);
         detailsTV.setText(details);
+        if(createdflag==1){
+            datetimeTv.setText("Last Updated "+datetimeStr);
+        }
+        else {
+            datetimeTv.setText("Created on "+datetimeStr);
+        }
+
         backbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,7 +119,7 @@ public class DetailsPage extends AppCompatActivity {
         updateValue(id);
 
         editabFlase();
-
+        getDateTime();
     }
     public void editabFlase(){
         undoButton.setVisibility(View.GONE);
@@ -158,6 +175,8 @@ public class DetailsPage extends AppCompatActivity {
         String newDetails=detailsTV.getText().toString();
         databaseReference.child(id).child("title").setValue(newTitle);
         databaseReference.child(id).child("details").setValue(newDetails);
+        databaseReference.child(id).child("dateString").setValue(datetime);
+        databaseReference.child(id).child("createdFlag").setValue(1);
 
 
         Query idQuery = databaseReference.orderByChild("id").equalTo(id);
@@ -170,6 +189,8 @@ public class DetailsPage extends AppCompatActivity {
                     details=dataListModel.getDetails();
                     tilteTV.setText(title);
                     detailsTV.setText(details);
+                    datetimeTv.setText("Last Updated "+dataListModel.getDateString());
+
                 }
             }
             @Override
@@ -177,6 +198,20 @@ public class DetailsPage extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    public void getDateTime() {
+        Calendar c = Calendar.getInstance();
+        System.out.println("Current time => " + c.getTime());
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MMM-dd HH:mm a");
+        String formattedDate = df.format(c.getTime());
+        // formattedDate have current date/time
+        Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
+        datetime= TimeValidation.getDateTime(formattedDate);
+        System.out.println("Current Date and Time : " +TimeValidation.getDateTime(formattedDate) );
+        TimeValidation.getDateTime(formattedDate);
 
     }
 }

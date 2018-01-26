@@ -22,6 +22,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -46,7 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener{
+public class MainActivity extends AppCompatActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
     Activity activity;
     RelativeLayout addList;
     RecyclerView rvlistView;
@@ -54,13 +56,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
 
     DataListAdapter dataListAdapter;
 
-    List<DataListModel> dataListModel= new ArrayList<DataListModel>();
+    List<DataListModel> dataListModel = new ArrayList<DataListModel>();
     public static String mainId;
     RecyclerView.LayoutManager mLayoutManager;
-    int isFavFilter=0;
-    int isLikeFilter=0;
-    int isPoemFilter=0;
-    int isStoryFilter=0;
+    int isFavFilter = 0;
+    int isLikeFilter = 0;
+    int isPoemFilter = 0;
+    int isStoryFilter = 0;
+
 
     /*
     Drawer Navigation
@@ -77,48 +80,45 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
     private CharSequence mTitle;
     ActionBarDrawerToggle mDrawerToggle;
     ImageButton rightbtn;
+    CheckBox hearted_cb, favourte_cb, poems_cb, story_cb;
+    RelativeLayout apply;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_act_drawer);
-        activity=MainActivity.this;
+        activity = MainActivity.this;
         databaseReference = FirebaseDatabase.getInstance().getReference("mainList");
-        addList=(RelativeLayout) findViewById(R.id.addList) ;
+        addList = (RelativeLayout) findViewById(R.id.addList);
         rvlistView = (RecyclerView) findViewById(R.id.listView);
 
-        rightbtn=(ImageButton)findViewById(R.id.right_btn) ;
-        drawer_header=(RelativeLayout)findViewById(R.id.header);
-        navigationView=(NavigationView)findViewById(R.id.nav_view) ;
+        rightbtn = (ImageButton) findViewById(R.id.right_btn);
+        drawer_header = (RelativeLayout) findViewById(R.id.header);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         mTitle = mDrawerTitle = getTitle();
-        mNavigationDrawerItemTitles= getResources().getStringArray(R.array.navigation_drawer_items_array);
+        mNavigationDrawerItemTitles = getResources().getStringArray(R.array.navigation_drawer_items_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer_header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mDrawerLayout.isDrawerOpen(navigationView)){
+                if (mDrawerLayout.isDrawerOpen(navigationView)) {
                     mDrawerLayout.closeDrawer(navigationView);
                 }
             }
         });
 
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        hearted_cb = (CheckBox) findViewById(R.id.hearted_cb);
+        favourte_cb = (CheckBox) findViewById(R.id.favourte_cb);
+        poems_cb = (CheckBox) findViewById(R.id.poems_cb);
+        story_cb = (CheckBox) findViewById(R.id.story_cb);
+        apply = (RelativeLayout) findViewById(R.id.apply);
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(null);
-         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        DataModel[] drawerItem = new DataModel[4];
-        drawerItem[0] = new DataModel("Hearted");
-        drawerItem[1] = new DataModel("Favourite");
-        drawerItem[2] = new DataModel("Poems");
-        drawerItem[3] = new DataModel("Story");
-
-
-        DrawerItemCustomAdapter adapter = new DrawerItemCustomAdapter(activity, R.layout.list_view_item_row, drawerItem);
-        mDrawerList.setAdapter(adapter);
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         //setupDrawerToggle();
@@ -127,10 +127,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
         rightbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mDrawerLayout.isDrawerOpen(navigationView)){
+                if (mDrawerLayout.isDrawerOpen(navigationView)) {
                     mDrawerLayout.closeDrawer(navigationView);
-                }else if(!mDrawerLayout.isDrawerOpen(navigationView)){
+                } else if (!mDrawerLayout.isDrawerOpen(navigationView)) {
                     mDrawerLayout.openDrawer(navigationView);
+                    setFilter();
                 }
             }
         });
@@ -139,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
         addList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i= new Intent(activity, AddNewList.class);
+                Intent i = new Intent(activity, AddNewList.class);
                 startActivity(i);
             }
         });
@@ -170,28 +171,115 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
         // attaching the touch helper to recycler view
         new ItemTouchHelper(itemTouchHelperCallback1).attachToRecyclerView(rvlistView);
 
+
+        hearted_cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (hearted_cb.isChecked()) {
+                    hearted_cb.setTextColor(Color.parseColor("#3CB371"));
+
+                } else {
+                    hearted_cb.setTextColor(Color.parseColor("#ffffff"));
+
+                }
+            }
+        });
+
+        favourte_cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (favourte_cb.isChecked()) {
+                    favourte_cb.setTextColor(Color.parseColor("#3CB371"));
+
+                } else {
+                    favourte_cb.setTextColor(Color.parseColor("#ffffff"));
+
+                }
+            }
+        });
+
+        poems_cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (poems_cb.isChecked()) {
+                    poems_cb.setTextColor(Color.parseColor("#3CB371"));
+
+                } else {
+                    poems_cb.setTextColor(Color.parseColor("#ffffff"));
+
+                }
+            }
+        });
+        story_cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (story_cb.isChecked()) {
+                    story_cb.setTextColor(Color.parseColor("#3CB371"));
+
+                } else {
+                    story_cb.setTextColor(Color.parseColor("#ffffff"));
+                }
+            }
+        });
+        apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(favourte_cb.isChecked()){
+                    isFavFilter=1;
+                }
+                else {
+                    isFavFilter=0;
+                }
+                if(hearted_cb.isChecked()){
+                    isLikeFilter=1;
+                }
+                else {
+                    isLikeFilter=0;
+                }
+                if(poems_cb.isChecked()){
+                    isPoemFilter=1;
+                }
+                else {
+                    isPoemFilter=0;
+                }
+
+                if(story_cb.isChecked()){
+                    isStoryFilter=1;
+                }
+                else {
+                    isStoryFilter=0;
+                }
+                dataListAdapter = new DataListAdapter(activity, dataListModel, databaseReference, isFavFilter, isLikeFilter, isPoemFilter, isStoryFilter);
+                rvlistView.setAdapter(dataListAdapter);
+                if (mDrawerLayout.isDrawerOpen(navigationView)) {
+                    mDrawerLayout.closeDrawer(navigationView);
+                } else if (!mDrawerLayout.isDrawerOpen(navigationView)) {
+                    mDrawerLayout.openDrawer(navigationView);
+                }
+            }
+        });
+
+        setFilter();
     }
+
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 dataListModel.clear();
-                for(DataSnapshot postSnapshot:dataSnapshot.getChildren()){
-                    DataListModel dataList=postSnapshot.getValue(DataListModel.class);
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    DataListModel dataList = postSnapshot.getValue(DataListModel.class);
                     dataListModel.add(dataList);
                 }
 
-                System.out.println("irshad vali======"+dataListModel.size());
-                dataListAdapter = new DataListAdapter(activity,dataListModel,databaseReference,isFavFilter,isLikeFilter,isPoemFilter,isStoryFilter);
+                System.out.println("irshad vali======" + dataListModel.size());
+                dataListAdapter = new DataListAdapter(activity, dataListModel, databaseReference, isFavFilter, isLikeFilter, isPoemFilter, isStoryFilter);
                 rvlistView.setAdapter(dataListAdapter);
 
             }
-
-
-
 
 
             @Override
@@ -220,46 +308,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
     }
 
 
-    private void selectItem(int position) {
-
-        Fragment fragment = null;
-
-        switch (position) {
-            case 0:
-                Toast.makeText(getApplicationContext(),""+position,Toast.LENGTH_SHORT).show();
-                //  fragment = new ConnectFragment();
-                break;
-            case 1:
-                Toast.makeText(getApplicationContext(),""+position,Toast.LENGTH_SHORT).show();
-                // fragment = new FixturesFragment();
-                break;
-            case 2:
-                Toast.makeText(getApplicationContext(),""+position,Toast.LENGTH_SHORT).show();
-                //  fragment = new TableFragment();
-                break;
-            case 3:
-                Toast.makeText(getApplicationContext(),""+position,Toast.LENGTH_SHORT).show();
-                //  fragment = new TableFragment();
-                break;
-            default:
-                break;
-        }
-        mDrawerList.setItemChecked(position, true);
-        mDrawerList.setSelection(position);
-
-        setTitle(mNavigationDrawerItemTitles[position]);
-        //mDrawerLayout.closeDrawer(navigationView);
-//        if (fragment != null) {
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-//
-//
-//
-//        } else {
-//            Log.e("MainActivity", "Error in creating fragment");
-//        }
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -282,13 +330,30 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
         //mDrawerToggle.syncState();
     }
 
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
 
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
+    public void setFilter() {
+        if (isFavFilter == 1) {
+            favourte_cb.setChecked(true);
+        } else {
+            favourte_cb.setChecked(false);
         }
 
+        if(isLikeFilter==1){
+            hearted_cb.setChecked(true);
+        }
+        else {
+            hearted_cb.setChecked(false);
+        }
+        if(isPoemFilter==1){
+            poems_cb.setChecked(true);
+        }else {
+            poems_cb.setChecked(false);
+        }
+        if(isStoryFilter==1){
+            story_cb.setChecked(true);
+        }else {
+            story_cb.setChecked(false);
+        }
     }
 
 }

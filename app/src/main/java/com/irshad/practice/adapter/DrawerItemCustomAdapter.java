@@ -36,7 +36,7 @@ public class DrawerItemCustomAdapter extends ArrayAdapter<DataModel> {
         LayoutInflater inflater = ((Activity) activity).getLayoutInflater();
         listItem = inflater.inflate(layoutResourceId, parent, false);
 
-        ImageView imageViewIcon = (ImageView) listItem.findViewById(R.id.imageViewIcon);
+        ImageView CheckBox = (ImageView) listItem.findViewById(R.id.imageViewIcon);
         TextView textViewName = (TextView) listItem.findViewById(R.id.textViewName);
 
         DataModel folder = data[position];

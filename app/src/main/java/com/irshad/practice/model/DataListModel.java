@@ -14,9 +14,11 @@ public class DataListModel {
     int favourite;
     int poem;
     int story;
+    String datetime;
+    int createdFlag;
     public DataListModel() {
     }
-    public DataListModel(String id, String title, String details, String dateString, String timeString, int like, int favourite,int poem,int story) {
+    public DataListModel(String id, String title, String details, String dateString, String timeString, int like, int favourite,int poem,int story,int createdFlag) {
         this.id = id;
         this.title = title;
         this.details = details;
@@ -26,6 +28,8 @@ public class DataListModel {
         this.favourite = favourite;
         this.poem=poem;
         this.story=story;
+        this.createdFlag=createdFlag;
+
     }
 
 
@@ -100,6 +104,22 @@ public class DataListModel {
 
     public void setStory(int story) {
         this.story = story;
+    }
+
+    public String getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
+    }
+
+    public int getCreatedFlag() {
+        return createdFlag;
+    }
+
+    public void setCreatedFlag(int createdFlag) {
+        this.createdFlag = createdFlag;
     }
 
 }

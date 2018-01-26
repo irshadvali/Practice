@@ -117,6 +117,8 @@ public class DataListAdapter extends RecyclerView.Adapter<DataListAdapter.MyView
                 i.putExtra("title", dataList.getTitle());
                 i.putExtra("details", dataList.getDetails());
                 i.putExtra("id", dataListModel.get(position).getId());
+                i.putExtra("createdflag",dataListModel.get(position).getCreatedFlag());
+                i.putExtra("datetime",dataListModel.get(position).getDateString());
                 activity.startActivity(i);
 
             }

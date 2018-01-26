@@ -52,14 +52,74 @@
                     android:src="@drawable/ic_close_black_24dp" />
             </RelativeLayout>
 
-            <ListView
-                android:id="@+id/left_drawer"
-                android:layout_width="240dp"
-                android:layout_height="match_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/header"
-                android:choiceMode="multipleChoice"
-                android:divider="@null"
-                android:dividerHeight="0dp" />
+                android:orientation="vertical">
+                <CheckBox
+                    android:id="@+id/hearted_cb"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_tick"
+                    android:layout_centerVertical="true"
+                    android:button="@null"
+                    android:drawableRight="@drawable/checkbox_filter"
+                    android:checked="false"
+                    android:text="Hearted"
+                    android:textColor="#ffffff"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"></CheckBox>
+
+                <CheckBox
+                    android:id="@+id/favourte_cb"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_tick"
+                    android:layout_centerVertical="true"
+                    android:button="@null"
+                    android:drawableRight="@drawable/checkbox_filter"
+                    android:checked="false"
+                    android:text="Favourte"
+                    android:textColor="#ffffff"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp"></CheckBox>
+
+                <CheckBox
+                    android:id="@+id/poems_cb"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_tick"
+                    android:layout_centerVertical="true"
+                    android:button="@null"
+                    android:drawableRight="@drawable/checkbox_filter"
+                    android:checked="false"
+                    android:text="Poems"
+                    android:textColor="#ffffff"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp"></CheckBox>
+
+                <CheckBox
+                    android:id="@+id/story_cb"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_tick"
+                    android:layout_centerVertical="true"
+                    android:button="@null"
+                    android:drawableRight="@drawable/checkbox_filter"
+                    android:checked="false"
+                    android:text="Story"
+                    android:textColor="#ffffff"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp"></CheckBox>
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/apply"

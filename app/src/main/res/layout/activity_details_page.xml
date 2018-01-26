@@ -91,6 +91,7 @@
                 android:background="#00000000" />
 
             <TextView
+                android:id="@+id/datetimeTv"
                 android:layout_below="@+id/tilteTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
