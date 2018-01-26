@@ -109,12 +109,24 @@
             android:singleLine="true"
             android:text="Hi I am Amiyo,you can see how to ellipse works.Hi I am Amiyo,you can see how to ellipse works."
             android:textSize="16dp" />
-
+        <TextView
+            android:id="@+id/dateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/details"
+            android:ellipsize="end"
+            android:paddingLeft="10dp"
+            android:paddingRight="100dp"
+            android:textStyle="italic"
+            android:singleLine="true"
+            android:text="21 Jan 2018 at 08:AM"
+            android:textSize="12dp"
+            android:layout_marginTop="5dp"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/details"
+            android:layout_below="@+id/dateTime"
             android:layout_marginTop="20dp"
             android:background="#e6e6e6"></View>
     </RelativeLayout>

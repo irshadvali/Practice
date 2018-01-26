@@ -119,7 +119,7 @@ public class DetailsPage extends AppCompatActivity {
         updateValue(id);
 
         editabFlase();
-        getDateTime();
+
     }
     public void editabFlase(){
         undoButton.setVisibility(View.GONE);
@@ -170,6 +170,7 @@ public class DetailsPage extends AppCompatActivity {
     }
 
     public void updateValue(String id){
+        getDateTime();
         databaseReference=FirebaseDatabase.getInstance().getReference("mainList");
         String newTitle=tilteTV.getText().toString();
         String newDetails=detailsTV.getText().toString();

@@ -33,7 +33,7 @@ public class DataListAdapter extends RecyclerView.Adapter<DataListAdapter.MyView
     int isStoryFilter;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, details;
+        public TextView title, details, dateTime;
         CheckBox favouritecb, likecb;
         public RelativeLayout viewBackground, viewForeground;
 
@@ -41,6 +41,7 @@ public class DataListAdapter extends RecyclerView.Adapter<DataListAdapter.MyView
             super(view);
             title = (TextView) view.findViewById(R.id.title);
             details = (TextView) view.findViewById(R.id.details);
+            dateTime = (TextView) view.findViewById(R.id.dateTime);
             viewBackground = view.findViewById(R.id.view_background);
             viewForeground = view.findViewById(R.id.view_foreground);
             favouritecb = (CheckBox) view.findViewById(R.id.favouritecb);
@@ -73,6 +74,8 @@ public class DataListAdapter extends RecyclerView.Adapter<DataListAdapter.MyView
         setView(dataList, holder);
         holder.title.setText(dataList.getTitle());
         holder.details.setText(dataList.getDetails());
+        holder.dateTime.setText(dataList.getDateString());
+
         if (dataList.getLike() == 1) {
             holder.likecb.setChecked(true);
         } else {
